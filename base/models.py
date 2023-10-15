@@ -33,7 +33,7 @@ class Tag(models.Model):
 	def __str__(self):
 		return self.name
 
-# Create your models here.
+
 class Post(models.Model):
 	headline = models.CharField(max_length=200)
 	sub_headline = models.CharField(max_length=200, null=True, blank=True)
