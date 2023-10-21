@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 
 from pathlib import Path
+from decouple import config
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,9 +28,9 @@ SECRET_KEY = 'django-insecure-$j^)9pcs3@&i@dhndwtji%@i&2xk#al6()+*2ban&gw!51=w##
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app']
+#ALLOWED_HOSTS = ['.vercel.app']
 #ALLOWED_HOSTS = ['127.0.0.1']
-#ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
@@ -45,6 +47,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'storages',
+
     
 ]
 
@@ -89,21 +92,22 @@ DATABASES = {
     'default': {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        'ENGINE': 'django.db.backends.postgresql',
-        # 'NAME': 'railway',
-        # 'USER':'postgres',
-        # 'PASSWORD':'BVEqcfZVr9jbk87iU7ao',
-        # 'HOST':'containers-us-west-82.railway.app',
-        # 'PORT':'7477',
-
-        'NAME': 'Portfolio',
+        'ENGINE':  'django.db.backends.postgresql',
+        'NAME': 'railway',
         'USER':'postgres',
-        'PASSWORD':'Test@1234',
-        'HOST':'localhost',
-        'PORT':'5432',
+        'PASSWORD':'BVEqcfZVr9jbk87iU7ao',
+        'HOST':'containers-us-west-82.railway.app',
+        'PORT':'7477',
+
+        # 'NAME': 'Portfolio',
+        # 'USER':'postgres',
+        # 'PASSWORD':'Test@1234',
+        # 'HOST':'localhost',
+        # 'PORT':'5432',
     }
 }
 
+#DATABASES['default'] = dj_database_url.config()
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -173,3 +177,19 @@ CKEDITOR_CONFIGS = {
         'width': '100%',
     },
 }
+
+
+
+AWS_QUERYSTRING_AUTH = False
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+
+AWS_ACCESS_KEY_ID = 'AKIARMLIK4PCLRL4QVH7'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'vasuportfolio'
+
+
+
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
