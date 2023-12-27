@@ -4,8 +4,6 @@ from django.contrib.auth.models import User
 from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
 
-
-
 class Profile(models.Model):
 	user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
 	first_name = models.CharField(max_length=200, blank=True, null=True)
@@ -38,12 +36,12 @@ class Post(models.Model):
 	headline = models.CharField(max_length=200)
 	sub_headline = models.CharField(max_length=200, null=True, blank=True)
 	thumbnail = models.ImageField(null=True, blank=True, upload_to="images", default="/images/placeholder.png")
-	#body = RichTextUploadingField(null=True, blank=True)
+	body = RichTextUploadingField(null=True, blank=True)
 	created = models.DateTimeField(auto_now_add=True)
 	active = models.BooleanField(default=False)
 	featured = models.BooleanField(default=False)
 	tags = models.ManyToManyField(Tag, null=True, blank=True)
-	slug = models.SlugField(null=True, blank=True)
+	slug = models.SlugField(null=True, blank=True,unique=True)
 
 	def __str__(self):
 		return self.headline
@@ -78,9 +76,9 @@ class PostComment(models.Model):
 		now = timezone.now()
 		return now
 
-class MyModel(models.Model):
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    email = models.EmailField(unique=True)
-    password = models.CharField(max_length=100)
-    confirm_password = models.CharField(max_length=100)
+# class MyModel(models.Model):
+#     first_name = models.CharField(max_length=50)
+#     last_name = models.CharField(max_length=50)
+#     email = models.EmailField(unique=True)
+#     password = models.CharField(max_length=100)
+#     confirm_password = models.CharField(max_length=100)

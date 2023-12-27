@@ -48,17 +48,9 @@ def posts(request):
         #return render(request,'base/posts.html')
 
 
-#def post(request,pk):
-def post(request,slug):
-
-    #return HttpResponse('<h2>Post</h2>')
-    #posts = Post.objects.get(id=pk)
+def post(request, slug):
 	post = Post.objects.get(slug=slug)
-	context = {'posts':posts}
-	return render(request,'base/post.html',context)
 
-def profile(request):
-    #return HttpResponse('<h2>User Profile</h2>')
 	if request.method == 'POST':
 		PostComment.objects.create(
 			author=request.user.profile,
@@ -67,12 +59,17 @@ def profile(request):
 			)
 		messages.success(request, "You're comment was successfuly posted!")
 
-		return redirect('post')
+		return redirect('post', slug=post.slug)
+
+
 	context = {'post':post}
+	return render(request, 'base/post.html', context)
+
+def profile(request):
 	return render (request,'base/profile.html')
 
 #CRUD VIEWS
-#@admin_only
+@admin_only
 @login_required(login_url="home")
 def createPost(request):
 	form = PostForm()
@@ -85,71 +82,6 @@ def createPost(request):
 
 	context = {'form':form}
 	return render(request, 'base/post_form.html', context)
-    #return render(request, 'base/post_form.html')
-
-@login_required(login_url="home")
-def createPost(request,pk):
-    post = Post.objects.get(id=pk)
-    form = PostForm(instance=post)
-    if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES,instance=post)
-        if form.is_valid():
-            form.save()
-        return redirect('posts')
-
-    context = {'form':form}
-    return render(request, 'base/post_form.html', context)
-
-# @admin_only
-@login_required(login_url="home")
-#def updatePost(request, pk):
-def updatePost(request, slug):
-	post = Post.objects.get(slug=slug)
-	#post = Post.objects.get(id=pk)
-	form = PostForm(instance=post)
-
-	if request.method == 'POST':
-		form = PostForm(request.POST, request.FILES, instance=post)
-		if form.is_valid():
-			form.save()
-		return redirect('posts')
-
-	context = {'form':form}
-	return render(request, 'base/post_form.html', context)
-
-# @admin_only
-@login_required(login_url="home")
-def deletePost(request, slug):
-	post = Post.objects.get(slug=slug)
-
-	if request.method == 'POST':
-		post.delete()
-		return redirect('posts')
-	context = {'item':post}
-	return render(request, 'base/delete.html', context)
-
-def sendEmail(request):
-
-	if request.method == 'POST':
-        #return HttpResponse('Email was sent')
-
-		template = render_to_string('base/email_template.html', {
-			'name':request.POST['name'],
-			'email':request.POST['email'],
-			'message':request.POST['message'],
-			})
-
-		email = EmailMessage(
-			request.POST['subject'],
-			template,
-			settings.EMAIL_HOST_USER,
-			['rahul773699@gmail.com']
-			)
-
-		email.fail_silently=False
-		email.send()
-
-	return render(request, 'base/email_sent.html')
 
 @admin_only
 @login_required(login_url="home")
@@ -191,7 +123,7 @@ def sendEmail(request):
 			request.POST['subject'],
 			template,
 			settings.EMAIL_HOST_USER,
-			['dennisivy11@gmail.com']
+			['vasu.vs45@gmail.com']
 			)
 
 		email.fail_silently=False
@@ -246,6 +178,7 @@ def registerPage(request):
 			messages.error(request, 'An error has occured with registration')
 	context = {'form':form}
 	return render(request, 'base/register.html', context)
+
 def logoutUser(request):
 	logout(request)
 	return redirect('home')
@@ -275,10 +208,3 @@ def updateProfile(request):
 
 	context = {'form':form}
 	return render(request, 'base/profile_form.html', context)
-
-# @login_required(login_url="home")
-# def userAccount(request):
-# 	profile = request.user.profile
-
-# 	context = {'profile':profile}
-# 	return render(request, 'base/account.html', context)
