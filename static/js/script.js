@@ -38,3 +38,16 @@ function setTheme(mode){
 
 	localStorage.setItem('theme', mode)
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    const readMoreLinks = document.querySelectorAll('.read-more');
+
+    readMoreLinks.forEach(link => {
+        link.addEventListener('click', function (event) {
+            event.preventDefault(); // Prevent the default behavior of the anchor link
+            const content = this.previousElementSibling;
+            content.classList.toggle('collapsed');
+            this.textContent = content.classList.contains('collapsed') ? 'Show More  >>' : '<<  Show Less';
+        });
+    });
+});

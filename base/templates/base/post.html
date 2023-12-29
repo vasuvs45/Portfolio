@@ -62,7 +62,7 @@
 
 <div class="post-container">
 
-	<a class="btn btn-sm btn-primary" href="{% url 'posts' %}">&laquo Back to Posts</a>
+	<a class="btn btn-sm btn-primary" href="{% url 'posts' %}">&laquo Back to Projects</a>
 
 	{% if request.user.is_staff %}
 		 <a class="btn btn-sm btn-primary" href="{% url 'update_post' post.slug %}">Edit</a>
