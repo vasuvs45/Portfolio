@@ -132,8 +132,8 @@ def sendEmail(request):
 	return render(request, 'base/email_sent.html')
 
 def loginPage(request):
-	if request.user.is_authenticated:
-		return redirect('home')
+	# if request.user.x:
+	# 	return redirect('home')
 
 	if request.method == 'POST':
 		email = request.POST.get('email')

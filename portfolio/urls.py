@@ -24,6 +24,7 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('base.urls')),
+    path('users/', include('users.urls')),
     #path('send_email/', views.sendEmail, name="send_email"),
     path('ckeditor/', include('ckeditor_uploader.urls')),
 
